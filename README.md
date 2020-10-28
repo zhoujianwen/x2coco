@@ -61,14 +61,14 @@
 <h5 id="2.2">2.2 txt</h5>
 - `txt/`
     - `data/`
-       - `train/images/`
-            - `image1.jpg`
-            - `image2.jpg`
-            - `...`
-       - `train/labels/`
-            - `1.txt`
-            - `2.txt`
-            - `...`
+            - `train/images/`
+                - `image1.jpg`
+                - `image2.jpg`
+                - `...`
+            - `train/labels/`
+                - `1.txt`
+                - `2.txt`
+                - `...`
             
 `1.txt` 的格式：
 
