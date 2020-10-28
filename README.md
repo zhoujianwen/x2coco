@@ -15,7 +15,7 @@
     - 新增 `csv2labelme`
     
 - (10/28/2020)
-    - 新增 'txt2coco'
+    - 新增 `txt2coco`
 
 
 <h4 id="1">1. 内容介绍</h4>
