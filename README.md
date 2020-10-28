@@ -59,17 +59,22 @@
 注：图片路径请使用绝对路径
 
 <h5 id="2.2">2.2 txt</h5>
+
+数据集
+链接：https://pan.baidu.com/s/1WN9ga-qD46y0Dok_2uQY1w 
+提取码：mm32 
+
 - `txt/`
     - `data/`
-            - `train/images/`
-                - `image1.jpg`
-                - `image2.jpg`
-                - `...`
-            - `train/labels/`
-                - `1.txt`
-                - `2.txt`
-                - `...`
-            
+        - `train/images/`
+             - `image1.jpg`
+             - `image2.jpg`
+             - `...`
+        - `train/labels/`
+             - `1.txt`
+             - `2.txt`
+             - `...`
+
 `1.txt` 的格式：
 
 ```
