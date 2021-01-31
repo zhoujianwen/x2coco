@@ -17,6 +17,8 @@
 - (10/28/2020)
     - 新增 `txt2coco`
 
+- (01/31/2021)
+    - 新增 `voc2coco`
 
 <h4 id="1">1. 内容介绍</h4>
 
@@ -27,7 +29,7 @@
 - labelme to coco
 - labelme to voc
 - csv to json
-
+- voc to coco
 <h4 id="2">2. 标准格式</h4>
 
 在使用转换脚本之前，必须要明确的几种格式
@@ -283,6 +285,44 @@ html = coco_dataset.display_image(1, use_url=False)
 IPython.display.HTML(html)
 ```
 ![示例](./1.png)
+
+<h5 id="3.7">3.7 voc2coco</h5>
+
+将 Pascal VOC 转换为 COCO annotation
+
+获得带注释的XML和图像文件后，将它们放入以下与下面类似的文件夹结构中，
+
+	rawdata
+	 └── 20210131181727
+		 ├── Annotations
+		 │ 		├── 1.xml
+		 │ 		├── ...
+		 │ 		└── 20.xml
+		 └── JPEGImages
+			 	├── 1.jpg
+			 	├── ...
+			 	└── 20.jpg
+然后，您可以像这样从我的GitHub运行voc2coco.py脚本，它将为您生成COCO数据格式的JSON文件。
+
+	$vocFolderName = 20210131181727
+	$cocoFolderName = format(datetime.now(), "%Y%m%d%H%M%S")
+	python voc2coco.py ./rawdata/voc/$FolderName/Annotations ./convertedData/coco/$FolderName/annotations/instances_train$FolderName.json
+
+COCO目录如下，其中你要手动将
+./rawdata/20210131181727/JPEGImages 目录下所有*.jpg文件拷贝到
+./convertedData/20210131224630/images
+
+	convertedData
+	 └── 20210131224630
+		 ├── annotations
+		 │ 	 ├── instances_train20210131224630.json
+		 │ 
+		 │ 
+		 └── images
+			 ├── 1.jpg
+			 ├── ...
+			 └── 20.jpg
+
 <h4 id="4">4. 万能中介csv</h4>
 
 从上面的转换格式中可以看出，并没有给出如何转到csv的，一是因为太过于简单，而是主流检测框架很少支持这种格式的数据输入。以下给出如何将标注信息写入`csv`
@@ -301,4 +341,4 @@ csv_labels.close()
 是不是非常简单。。。如果你不知道如何从原始的标签文件中读取得到标注信息，那没办法了，学学编程吧，23333
 
 <h4 id="5">5. 下一篇</h4>
-如何做数据扩充
+如何做数据增强？最近看了百度的paddlex，集成了不少数据增强的例子，为了节省宝贵的时间，建议参考一下。
