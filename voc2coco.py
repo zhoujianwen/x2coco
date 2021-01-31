@@ -11,7 +11,7 @@ import os
 import json
 import xml.etree.ElementTree as ET
 import glob
-
+from datetime import datetime
 START_BOUNDING_BOX_ID = 1
 PRE_DEFINE_CATEGORIES = None
 
@@ -113,10 +113,10 @@ def convert(xml_files, json_file):
                 categories[category] = new_id
             category_id = categories[category]
             bndbox = get_and_check(obj, "bndbox", 1)
-            xmin = int(get_and_check(bndbox, "xmin", 1).text) - 1
-            ymin = int(get_and_check(bndbox, "ymin", 1).text) - 1
-            xmax = int(get_and_check(bndbox, "xmax", 1).text)
-            ymax = int(get_and_check(bndbox, "ymax", 1).text)
+            xmin = float(get_and_check(bndbox, "xmin", 1).text) - 1
+            ymin = float(get_and_check(bndbox, "ymin", 1).text) - 1
+            xmax = float(get_and_check(bndbox, "xmax", 1).text)
+            ymax = float(get_and_check(bndbox, "ymax", 1).text)
             assert xmax > xmin
             assert ymax > ymin
             o_width = abs(xmax - xmin)
@@ -147,13 +147,19 @@ def convert(xml_files, json_file):
 
 if __name__ == "__main__":
     import argparse
-
     parser = argparse.ArgumentParser(
         description="Convert Pascal VOC annotation to COCO format."
     )
-    parser.add_argument("xml_dir", help="Directory path to xml files.", type=str)
-    parser.add_argument("json_file", help="Output COCO format json file.", type=str)
+    vocFolderName = "20210131223704"
+    saved_time = format(datetime.now(), "%Y%m%d%H%M%S")
+    cocoFolderName = saved_time
+    xml_dir = "./rawdata/voc/%s/Annotations" % vocFolderName
+    json_file = ("./convertedData/coco/%s/annotations/instances_train%s.json" %(cocoFolderName,cocoFolderName))
+
+    parser.add_argument("xml_dir", help="Directory path to xml files.", type=str,nargs="?",default= xml_dir)
+    parser.add_argument("json_file", help="Output COCO format json file.", type=str,nargs="?",default = json_file)
     args = parser.parse_args()
+
     xml_files = glob.glob(os.path.join(args.xml_dir, "*.xml"))
 
     # If you want to do train/test split, you can pass a subset of xml files to convert function.

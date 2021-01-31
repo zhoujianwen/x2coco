@@ -1,0 +1,44 @@
+<annotation>
+	<folder>UAV_data</folder>
+	<filename>13.jpg</filename>
+	<source>
+		<database>The UAV autolanding</database>
+		<annotation>UAV AutoLanding</annotation>
+		<image>flickr</image>
+		<flickrid>NULL</flickrid>
+	</source>
+	<owner>
+		<flickrid>NULL</flickrid>
+		<name>ChaojieZhu</name>
+	</owner>
+	<size>
+		<width>2560</width>
+		<height>1920</height>
+		<depth>3</depth>
+	</size>
+		<segmented>0</segmented>
+	<object>
+		<name>solderball</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>779.3103448275863</xmin>
+			<ymin>612.0689655172414</ymin>
+			<xmax>805.1724137931035</xmax>
+			<ymax>634.4827586206897</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>solderball</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>929.3103448275863</xmin>
+			<ymin>1189.6551724137933</ymin>
+			<xmax>948.2758620689656</xmax>
+			<ymax>1212.0689655172414</ymax>
+		</bndbox>
+	</object>
+</annotation>

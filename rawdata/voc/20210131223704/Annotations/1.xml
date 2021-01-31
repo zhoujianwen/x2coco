@@ -1,0 +1,56 @@
+<annotation>
+	<folder>UAV_data</folder>
+	<filename>1.jpg</filename>
+	<source>
+		<database>The UAV autolanding</database>
+		<annotation>UAV AutoLanding</annotation>
+		<image>flickr</image>
+		<flickrid>NULL</flickrid>
+	</source>
+	<owner>
+		<flickrid>NULL</flickrid>
+		<name>ChaojieZhu</name>
+	</owner>
+	<size>
+		<width>2560</width>
+		<height>1920</height>
+		<depth>3</depth>
+	</size>
+		<segmented>0</segmented>
+	<object>
+		<name>short</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>900.0</xmin>
+			<ymin>1266.6666666666667</ymin>
+			<xmax>1208.3333333333335</xmax>
+			<ymax>1456.6666666666667</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>solder</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1862.5</xmin>
+			<ymin>441.6666666666667</ymin>
+			<xmax>1885.4166666666667</xmax>
+			<ymax>466.6666666666667</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>solderball</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1745.8333333333335</xmin>
+			<ymin>714.5833333333334</ymin>
+			<xmax>1770.8333333333335</xmax>
+			<ymax>745.8333333333334</ymax>
+		</bndbox>
+	</object>
+</annotation>

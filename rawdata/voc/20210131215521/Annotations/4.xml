@@ -1,0 +1,56 @@
+<annotation>
+	<folder>UAV_data</folder>
+	<filename>.\rawdata\labelme\4.json.jpg</filename>
+	<source>
+		<database>The UAV autolanding</database>
+		<annotation>UAV AutoLanding</annotation>
+		<image>flickr</image>
+		<flickrid>NULL</flickrid>
+	</source>
+	<owner>
+		<flickrid>NULL</flickrid>
+		<name>ChaojieZhu</name>
+	</owner>
+	<size>
+		<width>2560</width>
+		<height>1920</height>
+		<depth>3</depth>
+	</size>
+		<segmented>0</segmented>
+	<object>
+		<name>short</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1984.0</xmin>
+			<ymin>986.0</ymin>
+			<xmax>2150.0</xmax>
+			<ymax>1172.0</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>solderball</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>2222.0</xmin>
+			<ymin>458.0</ymin>
+			<xmax>2250.0</xmax>
+			<ymax>484.0</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>solderball</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>2250.0</xmin>
+			<ymin>1244.0</ymin>
+			<xmax>2274.0</xmax>
+			<ymax>1274.0</ymax>
+		</bndbox>
+	</object>
+</annotation>

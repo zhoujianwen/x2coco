@@ -35,7 +35,7 @@ for json_file in files:
     with codecs.open(("%s/Annotations/%s.xml" %(saved_path,filename)),"w","utf-8") as xml:
         xml.write('<annotation>\n')
         xml.write('\t<folder>' + 'UAV_data' + '</folder>\n')
-        xml.write('\t<filename>' + json_file + ".jpg" + '</filename>\n')
+        xml.write('\t<filename>' + filename + ".jpg" + '</filename>\n')
         xml.write('\t<source>\n')
         xml.write('\t\t<database>The UAV autolanding</database>\n')
         xml.write('\t\t<annotation>UAV AutoLanding</annotation>\n')
