@@ -1,0 +1,4 @@
+.\convertedData\voc\20210131215340/Annotations\6.xml
+.\convertedData\voc\20210131215340/Annotations\3.xml
+.\convertedData\voc\20210131215340/Annotations\19.xml
+.\convertedData\voc\20210131215340/Annotations\13.xml

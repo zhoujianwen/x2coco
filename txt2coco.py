@@ -11,6 +11,8 @@ import pandas as pd
 import glob
 import cv2
 import os
+import time
+from datetime import datetime
 import shutil
 from IPython import embed
 from sklearn.model_selection import train_test_split
@@ -110,9 +112,10 @@ class Txt2CoCo:
 
 
 if __name__ == '__main__':
-    txt_file = ".\\data\\train\\labels"
-    image_dir = ".\\data\\train\\images"
-    saved_coco_path = "outputs"
+    txt_file = ".\\rawdata\\labels"
+    image_dir = ".\\rawdata\\images"
+    saved_coco_path = "convertedData"
+    saved_time = format(datetime.now(),"%Y%m%d%H%M%S")
     # 整合txt格式标注文件
     total_txt_annotations = {}
     annotations = []
@@ -156,25 +159,26 @@ if __name__ == '__main__':
     total_keys = list(total_txt_annotations.keys())
 
     train_keys, test_keys = train_test_split(total_keys, test_size=0.2)
-    #train_keys = total_keys
-    #test_keys = []
+    # 如果你不想划分数据集，请把下面两行代码的注释#去掉
+    # train_keys = total_keys
+    # test_keys = []
     print("train_n:", len(train_keys), 'test_n:', len(test_keys))
     # 创建必须的文件夹
-    if not os.path.exists('%scoco/annotations/' % saved_coco_path):
-        os.makedirs('%scoco/annotations/' % saved_coco_path)
-    if not os.path.exists('%scoco/images/train2020/' % saved_coco_path):
-        os.makedirs('%scoco/images/train2020/' % saved_coco_path)
-    if not os.path.exists('%scoco/images/test2020/' % saved_coco_path):
-        os.makedirs('%scoco/images/test2020/' % saved_coco_path)
+    if not os.path.exists('%s/coco/annotations/' % saved_coco_path):
+        os.makedirs('%s/coco/annotations/' % saved_coco_path)
+    if not os.path.exists('%s/coco/images/train%s/' %(saved_coco_path,saved_time)):
+        os.makedirs('%s/coco/images/train%s/' %(saved_coco_path,saved_time))
+    if not os.path.exists('%s/coco/images/test%s/' %(saved_coco_path,saved_time)):
+        os.makedirs('%s/coco/images/test%s/' %(saved_coco_path,saved_time))
     # 把训练集转化为COCO的json格式
     l2c_train = Txt2CoCo(image_dir=image_dir, total_annos=total_txt_annotations)
     train_instance = l2c_train.to_coco(train_keys)
-    l2c_train.save_coco_json(train_instance, '%scoco/annotations/instances_train2020.json' % saved_coco_path)
+    l2c_train.save_coco_json(train_instance, '%s/coco/annotations/instances_train%s.json' %(saved_coco_path,saved_time))
     for file in train_keys:
-        shutil.copy(os.path.join(image_dir,file), "%scoco/images/train2020/" % saved_coco_path)
+        shutil.copy(os.path.join(image_dir,file), "%s/coco/images/train%s/" %(saved_coco_path,saved_time))
     for file in test_keys:
-        shutil.copy(os.path.join(image_dir,file), "%scoco/images/test2020/" % saved_coco_path)
+        shutil.copy(os.path.join(image_dir,file), "%s/coco/images/test%s/" %(saved_coco_path,saved_time))
     # 把验证集转化为COCO的json格式
     l2c_val = Txt2CoCo(image_dir=image_dir, total_annos=total_txt_annotations)
     val_instance = l2c_val.to_coco(test_keys)
-    l2c_val.save_coco_json(val_instance, '%scoco/annotations/instances_test2020.json' % saved_coco_path)
+    l2c_val.save_coco_json(val_instance, '%s/coco/annotations/instances_test%s.json' %(saved_coco_path,saved_time))

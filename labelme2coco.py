@@ -2,12 +2,13 @@ import os
 import json
 import numpy as np
 import glob
+from datetime import datetime
 import shutil
 from sklearn.model_selection import train_test_split
 np.random.seed(41)
 
 #0为背景
-classname_to_id = {"short": 1,"solder":2,"solderball":3}
+classname_to_id = {"__background__": 0,"short": 1,"solder":2,"solderball":3}
 
 class Lableme2CoCo:
 
@@ -104,33 +105,34 @@ class Lableme2CoCo:
 
 if __name__ == '__main__':
     print(os.curdir)
-    labelme_path = "../DefectDataSet"
-    saved_coco_path = "../DefectDataSet"
+    labelme_path = ".\\rawdata\\labelme"
+    saved_coco_path = ".\\convertedData"
+    saved_time = format(datetime.now(),"%Y%m%d%H%M%S")
     print(str.format('labelme_path:{0}\nsaved_coco_path:{1}',os.path.exists(labelme_path),os.path.exists(saved_coco_path)))
     # 创建文件
-    if not os.path.exists("%scoco/annotations/"%saved_coco_path):
-        os.makedirs("%scoco/annotations/"%saved_coco_path)
-    if not os.path.exists("%scoco/images/train2019/"%saved_coco_path):
-        os.makedirs("%scoco/images/train2019"%saved_coco_path)
-    if not os.path.exists("%scoco/images/val2019/"%saved_coco_path):
-        os.makedirs("%scoco/images/val2019"%saved_coco_path)
+    if not os.path.exists('%s/coco/annotations/' % saved_coco_path):
+        os.makedirs('%s/coco/annotations/' % saved_coco_path)
+    if not os.path.exists('%s/coco/images/train%s/' % (saved_coco_path, saved_time)):
+        os.makedirs('%s/coco/images/train%s/' % (saved_coco_path, saved_time))
+    if not os.path.exists('%s/coco/images/test%s/' % (saved_coco_path, saved_time)):
+        os.makedirs('%s/coco/images/test%s/' % (saved_coco_path, saved_time))
     # 获取images目录下所有的joson文件列表
     json_list_path = glob.glob(labelme_path + "/*.json")
     # 数据划分,这里没有区分val2019和tran2019目录，所有图片都放在images目录下
-    train_path, val_path = train_test_split(json_list_path, test_size=0.12)
+    train_path, val_path = train_test_split(json_list_path, test_size=0.2)
     print("train_n:", len(train_path), 'val_n:', len(val_path))
 
     # 把训练集转化为COCO的json格式
     l2c_train = Lableme2CoCo()
     train_instance = l2c_train.to_coco(train_path)
-    l2c_train.save_coco_json(train_instance, '%scoco/annotations/instances_train2019.json'%saved_coco_path)
+    l2c_train.save_coco_json(train_instance, '%s/coco/annotations/instances_train%s.json' %(saved_coco_path,saved_time))
     for file in train_path:
-        shutil.copy(file.replace("json","jpg"),"%scoco/images/train2019/"%saved_coco_path)
+        shutil.copy(file.replace("json","jpg"),"%s/coco/images/train%s/" %(saved_coco_path,saved_time))
     for file in val_path:
-        shutil.copy(file.replace("json","jpg"),"%scoco/images/val2019/"%saved_coco_path)
+        shutil.copy(file.replace("json","jpg"),"%s/coco/images/test%s/" %(saved_coco_path,saved_time))
 
     # 把验证集转化为COCO的json格式
     l2c_val = Lableme2CoCo()
     val_instance = l2c_val.to_coco(val_path)
-    l2c_val.save_coco_json(val_instance, '%scoco/annotations/instances_val2019.json'%saved_coco_path)
+    l2c_val.save_coco_json(val_instance, '%s/coco/annotations/instances_test%s.json' %(saved_coco_path,saved_time))
 

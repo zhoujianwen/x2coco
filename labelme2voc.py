@@ -2,35 +2,40 @@ import os
 import numpy as np
 import codecs
 import json
+from datetime import datetime
 from glob import glob
 import cv2
 import shutil
 from sklearn.model_selection import train_test_split
 #1.标签路径
-labelme_path = "./labelme/"              #原始labelme标注数据路径
-saved_path = "./VOCdevkit/VOC2007/"                #保存路径
+saved_time = format(datetime.now(), "%Y%m%d%H%M%S")
+labelme_path = ".\\rawdata\\labelme"              #原始labelme标注数据路径
+saved_path = (".\\convertedData\\voc\\%s" % saved_time)                #保存路径
+
 
 #2.创建要求文件夹
-if not os.path.exists(saved_path + "Annotations"):
-    os.makedirs(saved_path + "Annotations")
-if not os.path.exists(saved_path + "JPEGImages/"):
-    os.makedirs(saved_path + "JPEGImages/")
-if not os.path.exists(saved_path + "ImageSets/Main/"):
-    os.makedirs(saved_path + "ImageSets/Main/")
+if not os.path.exists("%s/Annotations" % saved_path):
+    os.makedirs("%s/Annotations" % saved_path)
+if not os.path.exists("%s/JPEGImages" % saved_path):
+    os.makedirs("%s/JPEGImages" % saved_path)
+if not os.path.exists("%s/ImageSets" % saved_path):
+    os.makedirs("%s/ImageSets" % saved_path)
     
 #3.获取待处理文件
-files = glob(labelme_path + "*.json")
-files = [i.split("/")[-1].split(".json")[0] for i in files]
+files = glob("%s/*.json" % labelme_path)
+#files = [i.split("/")[-1].split(".json")[0] for i in files]
 
 #4.读取标注信息并写入 xml
-for json_file_ in files:
-    json_filename = labelme_path + json_file_ + ".json"
-    json_file = json.load(open(json_filename,"r",encoding="utf-8"))
-    height, width, channels = cv2.imread(labelme_path + json_file_ +".jpg").shape
-    with codecs.open(saved_path + "Annotations/"+json_file_ + ".xml","w","utf-8") as xml:
+for json_file in files:
+    #json_file_path = ("%s.json" % json_file)
+    (filepath,fullname) = os.path.split(json_file)
+    (filename,extension) = os.path.splitext(fullname)
+    json_file_details = json.load(open(json_file,"r",encoding="utf-8"))
+    height, width, channels = cv2.imread("%s/%s.jpg" %(filepath,filename)).shape
+    with codecs.open(("%s/Annotations/%s.xml" %(saved_path,filename)),"w","utf-8") as xml:
         xml.write('<annotation>\n')
         xml.write('\t<folder>' + 'UAV_data' + '</folder>\n')
-        xml.write('\t<filename>' + json_file_ + ".jpg" + '</filename>\n')
+        xml.write('\t<filename>' + json_file + ".jpg" + '</filename>\n')
         xml.write('\t<source>\n')
         xml.write('\t\t<database>The UAV autolanding</database>\n')
         xml.write('\t\t<annotation>UAV AutoLanding</annotation>\n')
@@ -47,7 +52,7 @@ for json_file_ in files:
         xml.write('\t\t<depth>' + str(channels) + '</depth>\n')
         xml.write('\t</size>\n')
         xml.write('\t\t<segmented>0</segmented>\n')
-        for multi in json_file["shapes"]:
+        for multi in json_file_details["shapes"]:
             points = np.array(multi["points"])
             xmin = min(points[:,0])
             xmax = max(points[:,0])
@@ -71,37 +76,42 @@ for json_file_ in files:
                 xml.write('\t\t\t<ymax>' + str(ymax) + '</ymax>\n')
                 xml.write('\t\t</bndbox>\n')
                 xml.write('\t</object>\n')
-                print(json_filename,xmin,ymin,xmax,ymax,label)
+        print(fullname,xmin,ymin,xmax,ymax,label)
         xml.write('</annotation>')
         
-#5.复制图片到 VOC2007/JPEGImages/下
-image_files = glob(labelme_path + "*.jpg")
-print("copy image files to VOC007/JPEGImages/")
+#5.复制图片到JPEGImages目录下
+image_files = glob(os.path.join(labelme_path,"*.jpg"))
+print(image_files)
+print("copy image files to JPEGImages")
 for image in image_files:
-    shutil.copy(image,saved_path +"JPEGImages/")
+    shutil.copy(image,"%s/JPEGImages" % saved_path)
     
 #6.split files for txt
-txtsavepath = saved_path + "ImageSets/Main/"
-ftrainval = open(txtsavepath+'/trainval.txt', 'w')
-ftest = open(txtsavepath+'/test.txt', 'w')
-ftrain = open(txtsavepath+'/train.txt', 'w')
-fval = open(txtsavepath+'/val.txt', 'w')
-total_files = glob("./VOC2007/Annotations/*.xml")
-total_files = [i.split("/")[-1].split(".xml")[0] for i in total_files]
+# 打开并创建必须的文件
+txtsavepath = "%s/ImageSets" % saved_path
+ftrainval = open(("%s/trainval.txt" % txtsavepath), 'w')
+#ftest = open(("%s/test.txt" % txtsavepath), 'w')
+ftrain = open(("%s/train.txt" % txtsavepath), 'w')
+fval = open(("%s/val.txt" % txtsavepath), 'w')
+total_files = glob(("%s/Annotations/*.xml" % saved_path))
+#total_files = [i.split("/")[-1].split(".xml")[0] for i in total_files]
 #test_filepath = ""
 for file in total_files:
-    ftrainval.write(file + "\n")
+    (filepath,fullname) = os.path.split(file)
+    ftrainval.write(fullname + "\n")
 #test
 #for file in os.listdir(test_filepath):
 #    ftest.write(file.split(".jpg")[0] + "\n")
 #split
-train_files,val_files = train_test_split(total_files,test_size=0.15,random_state=42)
+train_files,val_files = train_test_split(total_files,test_size=0.2,random_state=20)
 #train
 for file in train_files:
-    ftrain.write(file + "\n")
+    (filepath, fullname) = os.path.split(file)
+    ftrain.write(fullname + "\n")
 #val
 for file in val_files:
-    fval.write(file + "\n")
+    (filepath, fullname) = os.path.split(file)
+    fval.write(fullname + "\n")
 
 ftrainval.close()
 ftrain.close()

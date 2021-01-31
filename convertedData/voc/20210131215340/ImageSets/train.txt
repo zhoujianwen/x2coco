@@ -1,0 +1,16 @@
+.\convertedData\voc\20210131215340/Annotations\10.xml
+.\convertedData\voc\20210131215340/Annotations\4.xml
+.\convertedData\voc\20210131215340/Annotations\7.xml
+.\convertedData\voc\20210131215340/Annotations\20.xml
+.\convertedData\voc\20210131215340/Annotations\9.xml
+.\convertedData\voc\20210131215340/Annotations\14.xml
+.\convertedData\voc\20210131215340/Annotations\17.xml
+.\convertedData\voc\20210131215340/Annotations\8.xml
+.\convertedData\voc\20210131215340/Annotations\1.xml
+.\convertedData\voc\20210131215340/Annotations\11.xml
+.\convertedData\voc\20210131215340/Annotations\16.xml
+.\convertedData\voc\20210131215340/Annotations\15.xml
+.\convertedData\voc\20210131215340/Annotations\2.xml
+.\convertedData\voc\20210131215340/Annotations\18.xml
+.\convertedData\voc\20210131215340/Annotations\5.xml
+.\convertedData\voc\20210131215340/Annotations\12.xml
