@@ -33,6 +33,7 @@
 - labelme to voc
 - csv to json
 - voc to coco
+- vgg to coco
 <h4 id="2">2. 标准格式</h4>
 
 在使用转换脚本之前，必须要明确的几种格式
