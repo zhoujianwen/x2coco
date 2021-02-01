@@ -326,6 +326,41 @@ COCO目录如下，其中你要手动将
 			 ├── ...
 			 └── 20.jpg
 
+<h5 id="3.8">3.8 vgg2coco</h5>
+
+VGG Image Annotator to COCO annotation
+
+使用```python vgg2coco.py```转换脚本之前，需要自行修改vgg2coco.py代码
+
+主要修改文件读取和存储路径
+
+vgg_json_file
+
+json_file
+
+path_images
+```python
+if __name__ == '__main__':
+    vocFolderName = "202102010034"
+    vgg_json_file = "./rawdata/voc/%s/%s" %(vocFolderName, "train2017.json")   # path_to_input_via_json_file
+    saved_time = format(datetime.now(), "%Y%m%d%H%M%S")
+    cocoFolderName = saved_time
+    json_file = ('./convertedData/coco/%s/annotations/instances_train%s.json' % (cocoFolderName, cocoFolderName))  # path_to_output_coco_json_file
+    path_images = "./rawdata/voc/202102010034/JPEGImages" # path_to_images
+    via_to_coco(vgg_json_file, json_file, path_images)
+```
+
+另外你还需要依据vgg的train2017.json的region_attributes属性为即将要导入的新文件添加categories，例如其中027502.jpg的annotation内容如下
+![示例](./2.png)
+
+并依据标红的地方修改vgg2coco.py第104行代码，这个要根据你数据集的categories实现情况做修改就可以了。
+    
+    main_dict['categories'] = [{"id": 0,"name": "antenna"}]
+    
+完成上述修改之后就可以直接运行
+
+    python vgg2coco.py
+
 <h4 id="4">4. 万能中介csv</h4>
 
 从上面的转换格式中可以看出，并没有给出如何转到csv的，一是因为太过于简单，而是主流检测框架很少支持这种格式的数据输入。以下给出如何将标注信息写入`csv`
