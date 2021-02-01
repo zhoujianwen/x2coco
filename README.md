@@ -352,6 +352,8 @@ if __name__ == '__main__':
 ```
 
 另外你还需要依据vgg的train2017.json的region_attributes属性为即将要导出的新文件添加categories，例如其中027502.jpg的annotation内容如下
+
+
 ![示例](./2.png)
 
 并依据标红的地方修改vgg2coco.py第104行代码，这个要根据你数据集的categories实现情况做修改就可以了。
