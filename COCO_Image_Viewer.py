@@ -300,9 +300,10 @@ class CocoDataset():
 # In[3]:
 
 
-annotation_path = "./outputscoco/annotations/instances_train2020.json"
-image_dir = "./outputscoco/images/train2020"
-
+# annotation_path = "./outputscoco/annotations/instances_train2020.json"
+# image_dir = "./outputscoco/images/train2020"
+annotation_path ="./convertedData/coco/20210201040349/annotations/instances_train20210201040349.json"
+image_dir="./rawdata/voc/202102010034/JPEGImages"
 coco_dataset = CocoDataset(annotation_path, image_dir)
 #coco_dataset.display_info()
 coco_dataset.display_licenses()
